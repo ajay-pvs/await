@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function placeOrder(pizzaType) {
+        return new Promise((resolve, reject) => {
+          console.log(`Ordering ${pizzaType} pizza`);
+
+          setTimeout(function () {
+            const isPizzaReady = false;
+
+            if (isPizzaReady) {
+              console.log(`${pizzaType} pizza is ready!`);
+              resolve("Your pizza is on its way!");
+            } else {
+              reject(
+                new Error("Failed to prepare the pizza. Please try again.")
+              );
+            }
+          }, 2000);
+        });
+      }
+
+      async function orderPizza() {
+        try {
+          const pizzaType = "Cheese Barbecue";
+
+          const notification = await placeOrder(pizzaType);
+
+          console.log(`Notification: ${notification}`);
+        } catch (error) {
+          console.error(`Error placing the order: ${error.message}`);
+        }
+      }
+
+      orderPizza();
+    </script>
+  </body>
+</html>
