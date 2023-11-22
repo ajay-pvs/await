@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function placeOrder(pizzaType) {
+        return new Promise((resolve, reject) => {
+          console.log(`Robin orders the ${pizzaType} pizza`);
+
+          // Simulate order registration
+          setTimeout(() => {
+            console.log(`The app notes down the order for ${pizzaType}`);
+            resolve(pizzaType);
+          }, 1000);
+        });
+      }
+
+      function preparePizza(pizzaType) {
+        return new Promise((resolve, reject) => {
+          console.log(`PizzaHub is preparing the ${pizzaType} pizza`);
+
+          // Simulate pizza preparation
+          setTimeout(() => {
+            const isPizzaReady = true;
+
+            if (isPizzaReady) {
+              console.log(`${pizzaType} pizza is ready!`);
+              resolve(pizzaType);
+            } else {
+              reject(new Error(`Failed to prepare the ${pizzaType} pizza.`));
+            }
+          }, 2000);
+        });
+      }
+
+      function notifyCustomer(pizzaType) {
+        return new Promise((resolve, reject) => {
+          console.log(`Notifying Robin that the ${pizzaType} pizza is on its way!`);
+
+          // Simulate notification
+          setTimeout(() => {
+            resolve(`Notification sent: Your ${pizzaType} pizza is on its way!`);
+          }, 1000);
+        });
+      }
+
+      function orderPizza(pizzaType) {
+        placeOrder(pizzaType)
+          .then((orderedPizzaType) => {
+            return preparePizza(orderedPizzaType);
+          })
+          .then((preparedPizzaType) => {
+            return notifyCustomer(preparedPizzaType);
+          })
+          .then((notification) => {
+            console.log(notification);
+          })
+          .catch((error) => {
+            console.error(`Error in the pizza order process: ${error.message}`);
+          });
+      }
+
+      // Robin's order
+      const robinPizzaType = "Cheese Barbecue";
+      orderPizza(robinPizzaType);
+    </script>
+  </body>
+</html>
